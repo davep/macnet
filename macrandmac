@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Borrowing from https://remysharp.com/2017/05/29/getting-free-wifi, mostly
+# 'cos it's something I had to do on a Virgin East Coast train once to get
+# around a problem of theirs and I should keep the idea in a file somewhere
+# should I never need to do it quickly again.
+
+openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/:$//'
