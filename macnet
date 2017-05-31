@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# Target we'll do route tests against.
+GOOGLE=8.8.8.8
+
+# Figure out which is likely the most active interface.
+function GetIF()
+{
+    route get $GOOGLE | grep interface | cut -d : -f 2 | tr -d "[:space:]"
+}
+
+# Get the MAC address of the given interface.
+function GetMAC()
+{
+    ifconfig $1 | grep ether | cut -d " " -f 2
+}
+
+function GetIP()
+{
+    ifconfig $1 | grep netmask | cut -d " " -f 2
+}
+
+# Get the interface we're likely using to connect to the Net.
+NetIF=$(GetIF)
+
+# Get the MAC address for that interface.
+NetMAC=$(GetMAC $NetIF)
+
+# Get the IP address for that interface.
+NetIP=$(GetIP $NetIF)
+
+# Show the main details.
+echo "Interface:\t$NetIF"
+echo "MAC address:\t$NetMAC"
+echo "IP address:\t$NetIP"
+
